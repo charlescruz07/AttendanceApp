@@ -12,12 +12,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.acer.attendanceapp.Models.ClassModel;
 import com.acer.attendanceapp.R;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
 
@@ -27,15 +33,16 @@ import java.io.IOException;
 
 public class CreateClassActivity extends AppCompatActivity implements View.OnClickListener{
 
-    ImageView imagePicker,picHolder;
-    EditText nameTxt,dayTxt,timeTxt;
-    Uri uri;
+    private ImageView imagePicker,picHolder;
+    private EditText schoolTxt, roomTxt, nameTxt,dayTxt,timeTxt,classKey;
+    private Uri uri;
     private int PICK_IMAGE_REQUEST = 7;
-    FirebaseStorage firebaseStorage;
-    StorageReference mStorageRef;
+    private FirebaseStorage firebaseStorage;
+    private StorageReference mStorageRef;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference mRef;
-
+    private FirebaseAuth mAuth;
+    private FirebaseUser mUser;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,8 +53,16 @@ public class CreateClassActivity extends AppCompatActivity implements View.OnCli
         nameTxt = (EditText) findViewById(R.id.nameTxt);
         dayTxt = (EditText) findViewById(R.id.dayTxt);
         timeTxt = (EditText) findViewById(R.id.timeTxt);
+        schoolTxt = (EditText) findViewById(R.id.schoolTxt);
+        roomTxt = (EditText) findViewById(R.id.roomTxt);
+        classKey = (EditText) findViewById(R.id.classKeyTxt);
+
+        mAuth = FirebaseAuth.getInstance();
+        mUser = mAuth.getCurrentUser();
+
         firebaseDatabase = FirebaseDatabase.getInstance();
-        mRef = firebaseDatabase.getReference();
+        mRef = firebaseDatabase.getReference().child("Classes").child(mUser.getUid()).push();
+
         firebaseStorage = FirebaseStorage.getInstance();
         mStorageRef = firebaseStorage.getReference("ClassPictures");
         Log.d("charles",mStorageRef.toString());
@@ -61,11 +76,27 @@ public class CreateClassActivity extends AppCompatActivity implements View.OnCli
             startActivityForResult(Intent.createChooser(intent, "Select Picture"),PICK_IMAGE_REQUEST);
 
         }else if(v.getId() == R.id.submitBtn){
-
-            mStorageRef.child("wasa").putFile(uri);
-//            Log.d("charles",mStorageRef.getRoot().toString());
-            finish();
-            startActivity(new Intent(CreateClassActivity.this,TeacherActivity.class));
+            try {
+                mStorageRef.child(mUser.getUid()).child(uri.getLastPathSegment()).putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        ClassModel classModel = new ClassModel();
+                        classModel.setSchoolName(schoolTxt.getText().toString());
+                        classModel.setSubjectName(nameTxt.getText().toString());
+                        classModel.setDay(dayTxt.getText().toString());
+                        classModel.setTime(timeTxt.getText().toString());
+                        classModel.setRoom(roomTxt.getText().toString());
+                        classModel.setClassKey(classKey.getText().toString());
+                        classModel.setClassPic(taskSnapshot.getDownloadUrl().toString());
+                        Log.d("charles",taskSnapshot.toString());
+                        mRef.setValue(classModel);
+                        finish();
+                        startActivity(new Intent(CreateClassActivity.this, TeacherActivity.class));
+                    }
+                });
+            }catch (Exception e){
+                Toast.makeText(this, "There seems to be a problem.", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
