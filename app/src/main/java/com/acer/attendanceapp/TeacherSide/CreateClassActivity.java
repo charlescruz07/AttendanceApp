@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.acer.attendanceapp.Models.ClassModel;
@@ -35,6 +36,7 @@ public class CreateClassActivity extends AppCompatActivity implements View.OnCli
 
     private ImageView imagePicker,picHolder;
     private EditText schoolTxt, roomTxt, nameTxt,dayTxt,timeTxt,classKey;
+    private ProgressBar progressBar;
     private Uri uri;
     private int PICK_IMAGE_REQUEST = 7;
     private FirebaseStorage firebaseStorage;
@@ -56,6 +58,7 @@ public class CreateClassActivity extends AppCompatActivity implements View.OnCli
         schoolTxt = (EditText) findViewById(R.id.schoolTxt);
         roomTxt = (EditText) findViewById(R.id.roomTxt);
         classKey = (EditText) findViewById(R.id.classKeyTxt);
+        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
 
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
@@ -77,6 +80,7 @@ public class CreateClassActivity extends AppCompatActivity implements View.OnCli
 
         }else if(v.getId() == R.id.submitBtn){
             try {
+                progressBar.setVisibility(View.VISIBLE);
                 mStorageRef.child(mUser.getUid()).child(uri.getLastPathSegment()).putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -90,6 +94,7 @@ public class CreateClassActivity extends AppCompatActivity implements View.OnCli
                         classModel.setClassPic(taskSnapshot.getDownloadUrl().toString());
                         Log.d("charles",taskSnapshot.toString());
                         mRef.setValue(classModel);
+                        progressBar.setVisibility(View.GONE);
                         finish();
                         startActivity(new Intent(CreateClassActivity.this, TeacherActivity.class));
                     }
