@@ -52,7 +52,10 @@
         android:layout_marginLeft="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scaleType="fitXY"/>
+        android:background="@drawable/square_white"
+        android:padding="1dp"
+        android:scaleType="fitCenter"
+        android:visibility="gone"/>
 
     <TextView
         android:text="Subject Name:"
@@ -111,6 +114,7 @@
     <TextView
         android:id="@+id/submitBtn"
         android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp"
         android:text="SUBMIT"
         android:textSize="20sp"
         android:textStyle="bold"

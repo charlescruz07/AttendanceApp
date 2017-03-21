@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -47,7 +48,6 @@ public class CreateClassActivity extends AppCompatActivity implements View.OnCli
         timeTxt = (EditText) findViewById(R.id.timeTxt);
         firebaseDatabase = FirebaseDatabase.getInstance();
         mRef = firebaseDatabase.getReference();
-        //mStorageRef.getRoot().child("Class Pictures");
         firebaseStorage = FirebaseStorage.getInstance();
         mStorageRef = firebaseStorage.getReference("ClassPictures");
         Log.d("charles",mStorageRef.toString());
@@ -61,6 +61,7 @@ public class CreateClassActivity extends AppCompatActivity implements View.OnCli
             startActivityForResult(Intent.createChooser(intent, "Select Picture"),PICK_IMAGE_REQUEST);
 
         }else if(v.getId() == R.id.submitBtn){
+
             mStorageRef.child("wasa").putFile(uri);
 //            Log.d("charles",mStorageRef.getRoot().toString());
             finish();
@@ -76,6 +77,9 @@ public class CreateClassActivity extends AppCompatActivity implements View.OnCli
             uri = data.getData();
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(),uri);
+                picHolder.setVisibility(View.VISIBLE);
+                picHolder.getLayoutParams().height = 700;
+                picHolder.requestLayout();
                 picHolder.setImageBitmap(bitmap);
             } catch (IOException e) {
                 e.printStackTrace();
