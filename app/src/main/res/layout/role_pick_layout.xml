@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_img">
+
+    <TextView
+        android:id="@+id/label"
+        android:text="ROLE (?)"
+        android:textSize="50sp"
+        android:textStyle="bold"
+        android:textColor="#fff"
+        android:layout_marginTop="40dp"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:id="@+id/prof_btn"
+        android:layout_below="@+id/label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:onClick="onClick"
+        android:layout_marginTop="30dp">
+        <ImageView
+            android:id="@+id/prof_pic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/professor_pic"/>
+        <TextView
+            android:layout_below="@id/prof_pic"
+            android:text="TEACHER"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:textColor="#fff"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/student_btn"
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/prof_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:onClick="onClick">
+        <ImageView
+            android:id="@+id/student_pic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/student"/>
+        <TextView
+            android:layout_below="@+id/student_pic"
+            android:text="STUDENT"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:textColor="#fff"/>
+    </RelativeLayout>
+</RelativeLayout>

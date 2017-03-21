@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "20889261587",
+    "firebase_url": "https://attendanceapp-da256.firebaseio.com",
+    "project_id": "attendanceapp-da256",
+    "storage_bucket": "attendanceapp-da256.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:20889261587:android:b0e2c304f51348ae",
+        "android_client_info": {
+          "package_name": "com.acer.attendanceapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "20889261587-2jem93jo3ifb2s9k3tdi15hjgedu9oe3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNXxCapcLL_TQsWMavSIVMv9KgZpS7eBI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
