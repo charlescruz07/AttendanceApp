@@ -1,26 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_img">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/bottomBarHolder"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="50sp"
-        android:text="I'M A TEACHER"
-        android:layout_gravity="center_horizontal"/>
+        android:layout_alignParentBottom="true"
+        >
 
-    <Button
-        android:id="@+id/logout_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="onClick"
-        android:text="Log out"/>
-    <Button
+        <it.sephiroth.android.library.bottomnavigation.BottomNavigation
+            android:id="@+id/BottomNavigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:elevation="15dp"
+            app:bbn_entries="@menu/bottombar_menu_3items"
+            app:bbn_scrollEnabled="true"
+            app:bbn_badgeProvider="@string/bbn_badgeProvider"
+            app:layout_behavior="@string/bbn_phone_view_behavior" />
+
+    </android.support.design.widget.CoordinatorLayout>
+
+    <FrameLayout
+        android:id="@+id/fragmentHolder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottomBarHolder">
+    </FrameLayout>
+
+    <android.support.design.widget.FloatingActionButton
         android:id="@+id/create_act"
-        android:text="Create Class"
-        android:onClick="onClick"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        app:backgroundTint="#181818"
+        android:src="@drawable/add_activity"
+        android:layout_above="@+id/bottomBarHolder"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="12dp"
+        android:layout_marginBottom="12dp"
+        android:onClick="onClick"/>
 
-</LinearLayout>
+</RelativeLayout>

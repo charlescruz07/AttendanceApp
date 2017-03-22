@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#181818"
+    app:bbn_alwaysShowLabels="false"
+    app:bbn_itemColorActive="#35586C"
+    app:bbn_itemColorInactive="#8c8e8e"
+    app:bbn_badgeColor="#35586C">
+    <item
+        android:id="@+id/bbn_item1"
+        android:icon="@drawable/bottombar_home"
+        android:title="Home"
+        android:enabled="true"/>
+    <item
+        android:id="@+id/bbn_item2"
+        android:icon="@drawable/bottombar_notification"
+        android:title="Notifications"
+        android:enabled="true"/>
+    <item
+        android:id="@+id/bbn_profile"
+        android:icon="@drawable/bottombar_user"
+        android:title="Profile"
+        android:enabled="true"
+        />
+
+</menu>
