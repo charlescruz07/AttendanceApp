@@ -25,6 +25,7 @@
         <activity android:name=".TeacherSide.TeacherActivity"/>
         <activity android:name=".StudentSide.StudentActivity"/>
         <activity android:name=".TeacherSide.CreateClassActivity"/>
+        <activity android:name=".TeacherSide.ClassDetailsActivity"/>
     </application>
 
 </manifest>

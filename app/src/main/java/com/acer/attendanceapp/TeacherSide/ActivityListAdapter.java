@@ -1,6 +1,8 @@
 package com.acer.attendanceapp.TeacherSide;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -27,6 +29,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Created by Acer on 22/03/2017.
@@ -35,72 +38,21 @@ import java.util.ArrayList;
 public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapter.ViewHolder> {
 
     Context context;
-    private FirebaseDatabase firebaseDatabase;
-    private DatabaseReference mRef;
-    private FirebaseStorage firebaseStorage;
-    private StorageReference mStorageRef;
-    private Query query;
-
     private ArrayList<ClassModel> classesList;
+    private ArrayList<String> subjectPrimaryKeys;
+    private String[] hexCodes = {
+            "#B3B6B7",
+            "#FFC300",
+            "#C0392B",
+            "#145A32",
+            "#154360"
+    };
 
-    public ActivityListAdapter(Context context) {
+    public ActivityListAdapter(Context context, ArrayList<ClassModel> classesList, ArrayList<String> subjectPrimaryKeys) {
         this.context = context;
-
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        mRef = firebaseDatabase.getReference();
-        firebaseStorage = FirebaseStorage.getInstance();
-        mStorageRef = firebaseStorage.getReference();
-        classesList = new ArrayList<>();
-        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-
-        Log.d("kobe","ni sud siya sa adapter");
-
-        query = mRef.child("Classes")
-                .child(user.getUid());
-
-        query.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                query = mRef.child("Classes")
-                        .child(user.getUid())
-                        .child(dataSnapshot.getKey());
-                query.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        ClassModel classModel = dataSnapshot.getValue(ClassModel.class);
-                        classesList.add(classModel);
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-
+        this.classesList = classesList;
+        this.subjectPrimaryKeys = subjectPrimaryKeys;
+        Log.d("charles",classesList.size() + "mao ni ang size");
     }
 
     @Override
@@ -113,10 +65,14 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
 
     @Override
     public void onBindViewHolder(ActivityListAdapter.ViewHolder holder, int position) {
+
+        int random = new Random().nextInt(hexCodes.length-1);
         holder.className.setText(classesList.get(position).getSubjectName());
         holder.schedule.setText(classesList.get(position).getDay() + " " + classesList.get(position).getTime());
         holder.schoolName.setText(classesList.get(position).getSchoolName());
-        Glide.with(context).load(Uri.parse(classesList.get(position).getClassPic())).into(holder.classPic);gi
+        Glide.with(context).load(Uri.parse(classesList.get(position).getClassPic())).into(holder.classPic);
+        holder.picColor.setBackgroundColor(Color.parseColor(hexCodes[random]));
+
     }
 
     @Override
@@ -137,6 +93,13 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
             schedule = (TextView) itemView.findViewById(R.id.schedule);
             classPic = (ImageView) itemView.findViewById(R.id.classPic);
             picColor = (FrameLayout) itemView.findViewById(R.id.picColor);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    context.startActivity(new Intent(context,ClassDetailsActivity.class).putExtra("key",subjectPrimaryKeys.get(getAdapterPosition())));
+                }
+            });
         }
     }
 }

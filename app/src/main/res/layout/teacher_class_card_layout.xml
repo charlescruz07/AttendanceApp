@@ -132,6 +132,7 @@
                     android:layout_height="match_parent"
                     android:src="@drawable/feed1"
                     android:scaleType="centerCrop"
+                    android:alpha="0.2"
                     />
 
                 <FrameLayout

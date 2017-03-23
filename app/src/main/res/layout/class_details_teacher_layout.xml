@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/background_img">
+    <RelativeLayout
+        android:id="@+id/rel1"
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="220dp">
+
+    <FrameLayout
+        android:id="@+id/frame1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/subClassPic"
+            android:layout_width="match_parent"
+            android:layout_height="190dp"
+            android:src="@drawable/feed1"
+            android:scaleType="centerCrop"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="#000"
+            android:alpha="0.7"
+            android:layout_gravity="bottom"/>
+
+
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/delete"
+            android:layout_gravity="bottom|end"
+            android:layout_marginBottom="11dp"
+            android:layout_marginRight="10dp"/>
+    </FrameLayout>
+
+
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/books"
+        android:layout_marginBottom="-25dp"
+        android:layout_alignBottom="@+id/frame1"
+        android:layout_centerHorizontal="true"
+        android:elevation="2dp"/>
+
+    </RelativeLayout>
+
+        <TextView
+            android:layout_below="@id/rel1"
+            android:id="@+id/label1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Class Details:"
+            android:textStyle="bold"
+            android:textColor="#fff"
+            android:textSize="18sp"
+            android:layout_marginLeft="20dp"/>
+
+        <LinearLayout
+            android:id="@+id/lin1"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_below="@+id/label1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:src="@drawable/bulb_white"/>
+            <TextView
+                android:id="@+id/subName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Subject Name"
+                android:textColor="#fff"
+                android:textSize="16sp"
+                android:layout_marginLeft="10dp"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lin2"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_below="@+id/lin1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:src="@drawable/clock_white"/>
+            <TextView
+                android:id="@+id/subDateTimeRoom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date and Time | Room"
+                android:textColor="#fff"
+                android:textSize="16sp"
+                android:layout_marginLeft="10dp"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lin3"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_below="@+id/lin2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:src="@drawable/bank"/>
+            <TextView
+                android:id="@+id/subSchool"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Subject in what school (?)"
+                android:textColor="#fff"
+                android:textSize="16sp"
+                android:layout_marginLeft="10dp"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lin4"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_below="@+id/lin3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:src="@drawable/key"/>
+            <TextView
+                android:id="@+id/subKey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Subject Secret Key"
+                android:textColor="#fff"
+                android:textSize="16sp"
+                android:layout_marginLeft="10dp"
+                />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/lin4"
+            android:layout_marginTop="15dp"
+            android:alpha=".5"
+            android:background="#fff"
+            android:id="@+id/line1"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"/>
+
+        <TextView
+            android:id="@+id/label2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_below="@+id/line1"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:textColor="#fff"
+            android:textStyle="bold"
+            android:text="Logs:"/>
+
+        <FrameLayout
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/label2"
+            android:id="@+id/classParticipantsHolder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="2dp"></FrameLayout>
+
+    </RelativeLayout>
