@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.acer.attendanceapp.Models.SessionModel;
 import com.acer.attendanceapp.Models.announcementNotificationModel;
 import com.acer.attendanceapp.Models.basicNotificationModel;
 import com.acer.attendanceapp.Models.decisionNotificationModel;
@@ -36,13 +37,15 @@ public class studentNotification extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.recycler_view_layout, container, false);
+        SessionModel sessionModel = getArguments().getParcelable("notif");
         items = new ArrayList<ListItem>();
-        items.add(new basicNotificationModel("math","mwf 10:30-2:30","room bcl 5"));
-        items.add(new announcementNotificationModel("english"));
-        items.add(new decisionNotificationModel("Kristian Francisco", true, "Physics"));
-        items.add(new dropNotificationModel("Chemistry"));
-        items.add(new tobeDroppedNotificationModel("Math"));
-        items.add(new joinedNotificationModel("Free ELEC"));
+        items.add(new basicNotificationModel(sessionModel.getClassName(),sessionModel.getSched(),sessionModel.getVenue(), sessionModel.getKey()));
+//        items.add(new basicNotificationModel("math","mwf 10:30-2:30","room bcl 5"));
+//        items.add(new announcementNotificationModel("english"));
+//        items.add(new decisionNotificationModel("Kristian Francisco", true, "Physics"));
+//        items.add(new dropNotificationModel("Chemistry"));
+//        items.add(new tobeDroppedNotificationModel("Math"));
+//        items.add(new joinedNotificationModel("Free ELEC"));
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         layoutManager = new LinearLayoutManager(view.getContext());
@@ -50,5 +53,9 @@ public class studentNotification extends Fragment{
         adapter = new studentNotificationRecycler(((StudentActivity)getActivity()).getApplicationContext(), items);
         mRecyclerView.setAdapter(adapter);
         return view;
+    }
+
+    public void addBasicNotif(SessionModel sessionModel){
+
     }
 }

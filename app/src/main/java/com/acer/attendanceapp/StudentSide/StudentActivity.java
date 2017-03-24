@@ -13,6 +13,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -22,6 +23,7 @@ import android.widget.Toast;
 
 import com.acer.attendanceapp.LoginSignup.LoginActivity;
 import com.acer.attendanceapp.Models.ClassModel;
+import com.acer.attendanceapp.Models.SessionModel;
 import com.acer.attendanceapp.Models.basicNotificationModel;
 import com.acer.attendanceapp.R;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
@@ -78,75 +80,50 @@ public class StudentActivity extends AppCompatActivity{
         mRef = firebaseDatabase.getReference();
         firebaseStorage = FirebaseStorage.getInstance();
         mStorageRef = firebaseStorage.getReference();
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        mRef = firebaseDatabase.getReference().child("StudentSubs").child(user.getUid());
+        mRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                classKeys.add(dataSnapshot.getKey());
+                Log.d("charles",dataSnapshot.getKey());
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         mRef = firebaseDatabase.getReference().child("ClassSessions");
         mRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                mRef = firebaseDatabase.getReference().child("StudentSubs");
-                mRef.addChildEventListener(new ChildEventListener() {
-                    @Override
-                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-//                        mRef = firebaseDatabase.getReference().child("StudentSubs").child(dataSnapshot.getKey())
-                        classKeys.add(dataSnapshot.getKey());
-                    }
-
-                    @Override
-                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                    }
-
-                    @Override
-                    public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                    }
-
-                    @Override
-                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-                for(final String str : classKeys){
-                    if(dataSnapshot.getKey().equals(str)){
-                        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                        mRef = mRef.getRef().child("Classes");
-                        mRef.addChildEventListener(new ChildEventListener() {
+                for(String str : classKeys){
+                    if(str.equals(dataSnapshot.getKey())){
+                        mRef = firebaseDatabase.getReference().child("ClassSessions").child(dataSnapshot.getKey());
+                        mRef.addValueEventListener(new ValueEventListener() {
                             @Override
-                            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                                String tID = dataSnapshot.getKey();
-                                mRef = mRef.getRef().child("Classes").child(tID).child(str);
-                                mRef.addValueEventListener(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(DataSnapshot dataSnapshot) {
-                                        ClassModel classModel = dataSnapshot.getValue(ClassModel.class);
-                                        bnm = new basicNotificationModel(classModel.getSubjectName(),classModel.getDay() + " " + classModel.getTime() , classModel.getRoom());
-                                    }
-
-                                    @Override
-                                    public void onCancelled(DatabaseError databaseError) {
-
-                                    }
-                                });
-                            }
-
-                            @Override
-                            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                            }
-
-                            @Override
-                            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                            }
-
-                            @Override
-                            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                SessionModel sessionModel = dataSnapshot.getValue(SessionModel.class);
+                                Bundle bundle = new Bundle();
+                                bundle.putParcelable("notif",sessionModel);
+                                studentNotification.setArguments(bundle);
                             }
 
                             @Override
@@ -154,8 +131,6 @@ public class StudentActivity extends AppCompatActivity{
 
                             }
                         });
-                        mRef = mRef.getRef().child("StudentNotification").child(user.getUid()).child(str);
-                        mRef.setValue(bnm);
                     }
                 }
             }

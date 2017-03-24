@@ -11,11 +11,21 @@ public class basicNotificationModel implements ListItem {
     private String mSubjectName;
     private String mSchedule;
     private String mVenue;
+    private String key;
 
-    public basicNotificationModel(String mSubjectName, String mSchedule, String mVenue) {
+    public basicNotificationModel(String mSubjectName, String mSchedule, String mVenue, String key) {
         this.mSubjectName = mSubjectName;
         this.mSchedule = mSchedule;
         this.mVenue = mVenue;
+        this.key = key;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public String getmSubjectName() {

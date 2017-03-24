@@ -2,6 +2,7 @@ package com.acer.attendanceapp.StudentSide;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,14 +10,24 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.acer.attendanceapp.Models.ClassParticipant;
+import com.acer.attendanceapp.Models.SessionModel;
 import com.acer.attendanceapp.Models.announcementNotificationModel;
 import com.acer.attendanceapp.Models.basicNotificationModel;
 import com.acer.attendanceapp.Models.decisionNotificationModel;
 import com.acer.attendanceapp.Models.dropNotificationModel;
 import com.acer.attendanceapp.Models.joinedNotificationModel;
+import com.acer.attendanceapp.Models.studentPartticipant;
 import com.acer.attendanceapp.Models.tobeDroppedNotificationModel;
 import com.acer.attendanceapp.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -27,11 +38,18 @@ public class studentNotificationRecycler extends RecyclerView.Adapter<studentNot
 
     private final Context mContext;
     private final List<ListItem> mItems;
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference mRef;
 
 
     public studentNotificationRecycler(Context ctx, List<ListItem> items){
         mContext = ctx;
         mItems = items;
+    }
+
+    public void addNotif(SessionModel sessionModel)
+    {
+        //mItems.add(new basicNotificationModel(sessionModel.getClassName(), sessionModel.getSched(), sessionModel.getVenue()));
     }
 
     @Override
@@ -112,7 +130,7 @@ public class studentNotificationRecycler extends RecyclerView.Adapter<studentNot
             mAbsent = (Button) view.findViewById(R.id.basicAbsent);
         }
 
-        public void bindType(ListItem item) {
+        public void bindType(final ListItem item) {
             mSubjectName.setText(((basicNotificationModel)item).getmSubjectName());
             mSchedule.setText(((basicNotificationModel)item).getmSchedule());
             mVenue.setText(((basicNotificationModel)item).getmVenue());
@@ -125,7 +143,25 @@ public class studentNotificationRecycler extends RecyclerView.Adapter<studentNot
             mAttend.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(mContext, "ATTENDED NAKA", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(mContext, "ATTENDED NAKA", Toast.LENGTH_SHORT).show();
+
+
+                    Calendar calendar = Calendar.getInstance();
+                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    String formattedDate = df.format(calendar.getTime());
+
+                    studentPartticipant studentPartticipant = new studentPartticipant();
+                    final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    studentPartticipant.setStudentName(user.getDisplayName());
+                    studentPartticipant.setTime(formattedDate);
+
+                    firebaseDatabase = FirebaseDatabase.getInstance();
+                    mRef = firebaseDatabase.getReference();
+
+                    mRef = mRef.child("StudentAttendee").child(((basicNotificationModel)item).getKey());
+                    mRef.setValue(studentPartticipant);
+
+
                 }
             });
         }

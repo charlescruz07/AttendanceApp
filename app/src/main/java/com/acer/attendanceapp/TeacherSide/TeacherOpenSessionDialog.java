@@ -9,10 +9,17 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.acer.attendanceapp.Models.ClassModel;
+import com.acer.attendanceapp.Models.SessionModel;
 import com.acer.attendanceapp.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -42,14 +49,34 @@ public class TeacherOpenSessionDialog extends DialogFragment {
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         mRef = firebaseDatabase.getReference().child("ClassSessions").child(key).push();
-//        mRef.setValue("key");
-
-
 
         mOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mRef.setValue(editText.getText().toString());
+                final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                mRef = firebaseDatabase.getReference()
+                        .child("Classes")
+                        .child(user.getUid()).child(key);
+                mRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        ClassModel classModel = dataSnapshot.getValue(ClassModel.class);
+                        SessionModel sessionModel = new SessionModel();
+                        sessionModel.setSessionKey(editText.getText().toString());
+                        sessionModel.setClassName(classModel.getSubjectName());
+                        sessionModel.setSched(classModel.getDay() + " " + classModel.getTime());
+                        sessionModel.setVenue(classModel.getRoom());
+                        sessionModel.setKey(key);
+                        mRef = firebaseDatabase.getReference().child("ClassSessions").child(key);
+                        mRef.setValue(sessionModel);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
             }
         });
 
