@@ -26,9 +26,6 @@ import java.util.List;
 public class studentNotificationRecycler extends RecyclerView.Adapter<studentNotificationRecycler.ViewHolder>{
 
     private final Context mContext;
-//    private final List<ListItem> mItems = new List<ListItem>(
-//            new basicNotificationModel("Math","MWF 10:30-11:30","ROOM BCL 5"){},
-//    );
     private final List<ListItem> mItems;
 
 

@@ -27,6 +27,7 @@ public class TeacherActivity extends AppCompatActivity implements View.OnClickLi
     private FragmentTransaction fragmentTransaction;
     private int fragmentIdentifier = 0;
     private BottomNavigation bottomNavigation;
+    private static teacherNotification teacherNotification = new teacherNotification();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,14 +58,16 @@ public class TeacherActivity extends AppCompatActivity implements View.OnClickLi
             case 0:
                 fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.fragmentHolder, new ActivityListFragment()).addToBackStack(null).commit();
-                fragmentIdentifier = 1;
                 break;
-            case 1:
+            case 1:getFragmentManager().beginTransaction()
+                    .replace(R.id.fragmentHolder, teacherNotification)
+                    .addToBackStack(null)
+                    .commit();
                 break;
             case 2:
                 fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.fragmentHolder, new TeacherProfile()).addToBackStack(null).commit();
-                fragmentIdentifier = 3;
+                break;
         }
     }
 

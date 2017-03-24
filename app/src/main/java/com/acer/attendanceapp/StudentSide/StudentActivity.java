@@ -92,12 +92,7 @@ public class StudentActivity extends AppCompatActivity{
         };
 
         mFab = (FloatingActionButton) findViewById(R.id.studentFab);
-        mFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                    showDialogs(1);
-            }
-        });
+        setFabFunction(1);
 
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.student_fragment_container, studentClasses)
@@ -226,6 +221,7 @@ public class StudentActivity extends AppCompatActivity{
                                 .replace(R.id.student_fragment_container, studentClasses)
                                 .commit();
                         mFab.setVisibility(View.VISIBLE);
+                        setFabFunction(1);
                         mBottomNav.setNotification("", 0);
                         break;
                     case 1:
@@ -240,7 +236,8 @@ public class StudentActivity extends AppCompatActivity{
                                 .replace(R.id.student_fragment_container, studentMessages)
                                 .commit();
                         mBottomNav.setNotification("", 2);
-                        mFab.setVisibility(View.GONE);
+                        setFabFunction(2);
+                        mFab.setVisibility(View.VISIBLE);
                         break;
 
                 }
@@ -295,6 +292,11 @@ public class StudentActivity extends AppCompatActivity{
                 studentShowSubjectDialog.setRetainInstance(true);
                 studentShowSubjectDialog.show(getSupportFragmentManager(), "Confirm subject");
                 break;
+            case 3:
+                sendMessage sendMessage = new sendMessage();
+                sendMessage.setRetainInstance(true);
+                sendMessage.show(getSupportFragmentManager(), "wtf");
+                break;
         }
 
     }
@@ -326,6 +328,32 @@ public class StudentActivity extends AppCompatActivity{
                     .replace(R.id.student_fragment_container, studentMessageReply)
                     .commit();
                 break;
+        }
+
+    }
+
+    public void setFabFunction(int identifier){
+
+
+        switch (identifier){
+
+            case 1:
+                mFab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showDialogs(1);
+                }
+            });
+                break;
+            case 2:
+                mFab.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showDialogs(3);
+                    }
+                });
+                break;
+
         }
 
     }
