@@ -27,7 +27,7 @@ import java.util.List;
 
 public class studentNotification extends Fragment{
 
-    private List<ListItem> items = new ArrayList<ListItem>();
+    private List<ListItem> items;
     private RecyclerView mRecyclerView;
     RecyclerView.LayoutManager layoutManager;
     RecyclerView.Adapter adapter;
@@ -36,7 +36,7 @@ public class studentNotification extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.recycler_view_layout, container, false);
-
+        items = new ArrayList<ListItem>();
         items.add(new basicNotificationModel("math","mwf 10:30-2:30","room bcl 5"));
         items.add(new announcementNotificationModel("english"));
         items.add(new decisionNotificationModel("Kristian Francisco", true, "Physics"));

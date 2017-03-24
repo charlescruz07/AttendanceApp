@@ -47,6 +47,8 @@ public class StudentActivity extends AppCompatActivity{
 
     private static studentNotification studentNotification = new studentNotification();
     private static studentClasses studentClasses = new studentClasses();
+    private static studentMessages studentMessages = new studentMessages();
+    private static studentMessageReply studentMessageReply = new studentMessageReply();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -224,6 +226,7 @@ public class StudentActivity extends AppCompatActivity{
                                 .replace(R.id.student_fragment_container, studentClasses)
                                 .commit();
                         mFab.setVisibility(View.VISIBLE);
+                        mBottomNav.setNotification("", 0);
                         break;
                     case 1:
                         getSupportFragmentManager().beginTransaction()
@@ -233,7 +236,10 @@ public class StudentActivity extends AppCompatActivity{
                         mFab.setVisibility(View.GONE);
                         break;
                     case 2:
-                        Toast.makeText(StudentActivity.this, "Tab 2 selected", Toast.LENGTH_SHORT).show();
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.student_fragment_container, studentMessages)
+                                .commit();
+                        mBottomNav.setNotification("", 2);
                         mFab.setVisibility(View.GONE);
                         break;
 
@@ -310,6 +316,12 @@ public class StudentActivity extends AppCompatActivity{
                 break;
         }
 
+    }
+
+    public void goReply(){
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.student_fragment_container, studentMessageReply)
+                .commit();
     }
 
 }
