@@ -5,7 +5,7 @@ android {
     buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "com.acer.attendanceapp"
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -13,7 +13,8 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -38,6 +39,9 @@ dependencies {
     compile 'com.github.florent37:diagonallayout:1.0.2'
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'de.hdodenhof:circleimageview:2.1.0'
+    compile 'com.pavelsikun:materialdesignicons:1.0'
+    compile 'com.heinrichreimersoftware:material-drawer:2.3.2'
+    compile 'com.aurelhubert:ahbottomnavigation:2.0.6'
     testCompile 'junit:junit:4.12'
 }
 apply plugin: 'com.google.gms.google-services'

@@ -250,10 +250,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     @Override
     public void onClick(View v) {
         if(v.getId() == R.id.fbLogin){
-            LoginManager.getInstance().logInWithReadPermissions(
-                    this,
-                    Arrays.asList("user_photos", "email", "user_birthday", "public_profile")
-            );
+//            LoginManager.getInstance().logInWithReadPermissions(
+//                    this,
+//                    Arrays.asList("user_photos", "email", "user_birthday", "public_profile")
+//            );
+            Intent intent = new Intent(this, StudentActivity.class);
+            startActivity(intent);
         }else if(v.getId() == R.id.googleLogin){
             signInUsingGoogle();
         }

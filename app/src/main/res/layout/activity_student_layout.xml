@@ -1,19 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawerLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="50sp"
-        android:text="STUDENT KO"
-        android:layout_gravity="center_horizontal"/>
-    <Button
-        android:id="@+id/logout_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="onClick"
-        android:text="Log out"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF">
 
-</LinearLayout>
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/color_toolbar"
+            android:elevation="@dimen/md_app_bar_elevation"
+            android:minHeight="?attr/actionBarSize"
+            app:contentInsetStart="72dp"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            tools:ignore="UnusedAttribute" />
+
+        <FrameLayout
+            android:id="@+id/student_fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/toolbar"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/studentFab"
+            android:background="@color/color_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fabSize="normal"
+            android:layout_above="@+id/student_bottom_navigation"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/zzz_plus"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
+            app:elevation="4dp"/>
+
+    <com.aurelhubert.ahbottomnavigation.AHBottomNavigation
+        android:id="@+id/student_bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:minHeight="?attr/actionBarSize"
+        android:layout_alignParentBottom="true" />
+
+    </RelativeLayout>
+
+    <com.heinrichreimersoftware.materialdrawer.DrawerView
+        android:id="@+id/drawer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="#FFFFFF"
+        android:fitsSystemWindows="true" />
+
+
+</android.support.v4.widget.DrawerLayout>
