@@ -8,6 +8,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.acer.attendanceapp.Models.ClassParticipant;
 import com.acer.attendanceapp.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -62,15 +64,31 @@ public class ClassParticipantFragment extends Fragment{
                 .child(user.getUid())
                 .child(key);
 
-        query.addValueEventListener(new ValueEventListener() {
+        query.addChildEventListener(new ChildEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Log.d("charles",dataSnapshot.getKey());
                 ClassParticipant participant = dataSnapshot.getValue(ClassParticipant.class);
                 participants.add(participant);
                 adapter = new ClassParticipantAdapter(getActivity(),participants);
                 recyclerView.setAdapter(adapter);
                 StaggeredGridLayoutManager sgm = new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.HORIZONTAL);
                 recyclerView.setLayoutManager(sgm);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
             }
 
             @Override

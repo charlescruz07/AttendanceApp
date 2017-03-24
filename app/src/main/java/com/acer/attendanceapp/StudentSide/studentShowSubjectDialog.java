@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.acer.attendanceapp.Models.ClassModel;
 import com.acer.attendanceapp.Models.ClassParticipant;
 import com.acer.attendanceapp.Models.Users;
+import com.acer.attendanceapp.Models.studentClassesModel;
 import com.acer.attendanceapp.R;
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
@@ -43,6 +44,7 @@ public class studentShowSubjectDialog extends DialogFragment{
     private ImageView profPic;
     private TextView profName,subName,subSched,subRoom;
 
+    private studentClassesModel studClassModel;
     private String tID,subID;
     public studentShowSubjectDialog(){
 
@@ -82,6 +84,13 @@ public class studentShowSubjectDialog extends DialogFragment{
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 ClassModel classModel = dataSnapshot.getValue(ClassModel.class);
                                 if(classModel.getClassKey().equals(key)){
+
+                                    studClassModel = new studentClassesModel();
+                                    studClassModel.setmSubject(classModel.getSubjectName());
+                                    studClassModel.setmSchedule(classModel.getDay() + " " + classModel.getTime());
+                                    studClassModel.setmVenue(classModel.getRoom());
+                                    studClassModel.setNumOfAbsences(0);
+
                                     Log.d("charles",classModel.getSubjectName());
                                     subName.setText(classModel.getSubjectName());
                                     subSched.setText(classModel.getDay() + " " + classModel.getTime() );
@@ -91,6 +100,7 @@ public class studentShowSubjectDialog extends DialogFragment{
                                     mRef.addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(DataSnapshot dataSnapshot) {
+                                            studClassModel.setmProfessor(dataSnapshot.getValue().toString());
                                             profName.setText(dataSnapshot.getValue().toString());
                                         }
 
@@ -103,6 +113,7 @@ public class studentShowSubjectDialog extends DialogFragment{
                                     mRef.addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(DataSnapshot dataSnapshot) {
+                                            studClassModel.setmProfPic(dataSnapshot.getValue().toString());
                                             Glide.with(getActivity()).load(Uri.parse(dataSnapshot.getValue().toString())).into(profPic);
                                         }
 
@@ -176,6 +187,9 @@ public class studentShowSubjectDialog extends DialogFragment{
                 classParticipant.setStudentName(user.getDisplayName());
                 classParticipant.setStudentImg(user.getPhotoUrl().toString());
                 mRef.setValue(classParticipant);
+
+                mRef = firebaseDatabase.getReference().child("StudentSubs").child(user.getUid()).child(subID);
+                mRef.setValue(studClassModel);
                 getDialog().dismiss();
             }
         });

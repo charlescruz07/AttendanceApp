@@ -66,7 +66,6 @@ public class StudentActivity extends AppCompatActivity{
     private void init() {
 
         mAuth = FirebaseAuth.getInstance();
-//        mAuth.signOut();
         mBottomNav = (AHBottomNavigation) findViewById(R.id.student_bottom_navigation);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle("Home");
@@ -131,6 +130,7 @@ public class StudentActivity extends AppCompatActivity{
                         mToolbar.setTitle("Settings");
                         break;
                     case 5:
+                        mAuth.signOut();
                         Intent intent = new Intent(StudentActivity.this, LoginActivity.class);
                         startActivity(intent);
                         finish();

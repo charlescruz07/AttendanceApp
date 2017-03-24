@@ -39,7 +39,8 @@ public class ClassParticipantAdapter extends RecyclerView.Adapter<ClassParticipa
     @Override
     public void onBindViewHolder(ClassParticipantAdapter.ViewHolder holder, int position) {
         Glide.with(context).load(Uri.parse(participants.get(position).getStudentImg())).into(holder.civ);
-        holder.studentName.setText(participants.get(position).getStudentName());
+        String arr[] = participants.get(position).getStudentName().split(" ", 2);
+        holder.studentName.setText(arr[0]);
     }
 
     @Override

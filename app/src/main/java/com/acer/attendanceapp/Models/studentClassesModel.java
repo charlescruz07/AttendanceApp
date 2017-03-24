@@ -10,7 +10,11 @@ public class studentClassesModel {
     private String mSchedule;
     private String mVenue;
     private String mProfessor;
-    private int mProfPic;
+    private String mProfPic;
+
+    public studentClassesModel() {
+
+    }
 
     public int getNumOfAbsences() {
         return numOfAbsences;
@@ -22,7 +26,7 @@ public class studentClassesModel {
 
     private int numOfAbsences;
 
-    public studentClassesModel(String mSubject, String mSchedule, String mVenue, String mProfessor, int mProfPic, int numOfAbsences) {
+    public studentClassesModel(String mSubject, String mSchedule, String mVenue, String mProfessor, String mProfPic, int numOfAbsences) {
         this.mSubject = mSubject;
         this.mSchedule = mSchedule;
         this.mVenue = mVenue;
@@ -63,11 +67,11 @@ public class studentClassesModel {
         this.mProfessor = mProfessor;
     }
 
-    public int getmProfPic() {
+    public String getmProfPic() {
         return mProfPic;
     }
 
-    public void setmProfPic(int mProfPic) {
+    public void setmProfPic(String mProfPic) {
         this.mProfPic = mProfPic;
     }
 }

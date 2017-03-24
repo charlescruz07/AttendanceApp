@@ -2,6 +2,7 @@ package com.acer.attendanceapp.StudentSide;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,17 @@ import android.widget.Toast;
 
 import com.acer.attendanceapp.Models.studentClassesModel;
 import com.acer.attendanceapp.R;
+import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,16 +34,22 @@ public class studentClassRecycler extends RecyclerView.Adapter<studentClassRecyc
 
     private Context mContext;
     private List<studentClassesModel> studentClasses;
+    private List<String> keys = new ArrayList<>();
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference mRef;
 
-    public studentClassRecycler(Context mContext, List<studentClassesModel> studentClasses) {
+    public studentClassRecycler(Context mContext, List<studentClassesModel> studentClasses, String key) {
         this.mContext = mContext;
         this.studentClasses = studentClasses;
+        this.keys.add(key);
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.student_classes, parent, false);
         ViewHolder vh = new ViewHolder(view);
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        mRef = firebaseDatabase.getReference();
         return vh;
     }
 
@@ -43,7 +60,8 @@ public class studentClassRecycler extends RecyclerView.Adapter<studentClassRecyc
         holder.mSchedule.setText(studentClasses.get(position).getmSchedule());
         holder.mVenue.setText(studentClasses.get(position).getmVenue());
         holder.mProfName.setText(studentClasses.get(position).getmProfessor());
-        holder.mProfPic.setImageResource(studentClasses.get(position).getmProfPic());
+//        holder.mProfPic.setImageResource(studentClasses.get(position).getmProfPic());
+        Glide.with(mContext).load(studentClasses.get(position).getmProfPic()).into(holder.mProfPic);
         holder.mNumOfAbsences.setText(studentClasses.get(position).getNumOfAbsences()+"");
     }
 
@@ -77,6 +95,69 @@ public class studentClassRecycler extends RecyclerView.Adapter<studentClassRecyc
             mDrop.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    mRef = mRef.child("StudentSubs").child(user.getUid()).child(keys.get(getAdapterPosition()));
+                    mRef.setValue(null);
+
+//                    Log.d("charles",mRef.child("StudentSubs").child(keys.get(getAdapterPosition())).getRef().toString());
+//                    mRef.child("ClassParticipants");
+//                    mRef.addChildEventListener(new ChildEventListener() {
+//                        @Override
+//                        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+//                            final String tID = dataSnapshot.getKey();
+//                            mRef.child("ClassParticipants").child(tID);
+//                            mRef.addChildEventListener(new ChildEventListener() {
+//                                @Override
+//                                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+//                                    final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+//                                    if(dataSnapshot.getKey().equals(user.getUid())){
+//                                        mRef.child("ClassParticipants").child(tID).child(dataSnapshot.getKey());
+//
+//                                    }
+//                                }
+//
+//                                @Override
+//                                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+//
+//                                }
+//
+//                                @Override
+//                                public void onChildRemoved(DataSnapshot dataSnapshot) {
+//
+//                                }
+//
+//                                @Override
+//                                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+//
+//                                }
+//
+//                                @Override
+//                                public void onCancelled(DatabaseError databaseError) {
+//
+//                                }
+//                            });
+//                        }
+//
+//                        @Override
+//                        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+//
+//                        }
+//
+//                        @Override
+//                        public void onChildRemoved(DataSnapshot dataSnapshot) {
+//
+//                        }
+//
+//                        @Override
+//                        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+//
+//                        }
+//
+//                        @Override
+//                        public void onCancelled(DatabaseError databaseError) {
+//
+//                        }
+//                    });
                     Toast.makeText(mContext, "DROPPED", Toast.LENGTH_SHORT).show();
                 }
             });
