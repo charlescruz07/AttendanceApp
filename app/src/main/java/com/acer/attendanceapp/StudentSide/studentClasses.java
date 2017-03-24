@@ -42,7 +42,7 @@ public class studentClasses extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.recycler_view_layout, container, false);
-        studentClassesModelList = new ArrayList<studentClassesModel>();
+        studentClassesModelList = new ArrayList<>();
 
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 

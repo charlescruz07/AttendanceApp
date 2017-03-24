@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -33,7 +34,7 @@ import com.google.firebase.storage.StorageReference;
 public class ClassDetailsActivity extends AppCompatActivity {
 
     private TextView subName,subSched,subSchool,subKey;
-    private ImageView subClassPic;
+    private ImageView subClassPic,openSession;
     private FrameLayout frameLayout;
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
@@ -56,13 +57,25 @@ public class ClassDetailsActivity extends AppCompatActivity {
         subKey = (TextView) findViewById(R.id.subKey);
         subClassPic = (ImageView) findViewById(R.id.subClassPic);
         frameLayout = (FrameLayout) findViewById(R.id.classParticipantsHolder);
+        openSession = (ImageView) findViewById(R.id.openSession);
         mContext = this;
-        String key = getIntent().getStringExtra("key");
+        final String key = getIntent().getStringExtra("key");
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         mRef = firebaseDatabase.getReference();
         firebaseStorage = FirebaseStorage.getInstance();
         mStorageRef = firebaseStorage.getReference();
+
+        openSession.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString("key",key);
+                TeacherOpenSessionDialog teacherOpenSessionDialog = new TeacherOpenSessionDialog();
+                teacherOpenSessionDialog.setArguments(bundle);
+                teacherOpenSessionDialog.show(getFragmentManager(),"charles");
+            }
+        });
 
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 

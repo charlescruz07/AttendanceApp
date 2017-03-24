@@ -21,15 +21,28 @@ import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.acer.attendanceapp.LoginSignup.LoginActivity;
+import com.acer.attendanceapp.Models.ClassModel;
+import com.acer.attendanceapp.Models.basicNotificationModel;
 import com.acer.attendanceapp.R;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.heinrichreimersoftware.materialdrawer.DrawerActivity;
 import com.heinrichreimersoftware.materialdrawer.DrawerView;
 import com.heinrichreimersoftware.materialdrawer.structure.DrawerHeaderItem;
 import com.heinrichreimersoftware.materialdrawer.structure.DrawerItem;
 import com.heinrichreimersoftware.materialdrawer.structure.DrawerProfile;
+
+import java.util.ArrayList;
 
 /**
  * Created by Kristian Francisco on 20/03/2017.
@@ -44,6 +57,12 @@ public class StudentActivity extends AppCompatActivity{
     private DrawerView mDrawer;
     private ActionBarDrawerToggle mDrawerToggle;
     private FloatingActionButton mFab;
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference mRef;
+    private FirebaseStorage firebaseStorage;
+    private StorageReference mStorageRef;
+    private ArrayList<String> classKeys = new ArrayList<>();
+    public basicNotificationModel bnm;
 
     private static studentNotification studentNotification = new studentNotification();
     private static studentClasses studentClasses = new studentClasses();
@@ -55,6 +74,112 @@ public class StudentActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_layout);
 
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        mRef = firebaseDatabase.getReference();
+        firebaseStorage = FirebaseStorage.getInstance();
+        mStorageRef = firebaseStorage.getReference();
+
+        mRef = firebaseDatabase.getReference().child("ClassSessions");
+        mRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                mRef = firebaseDatabase.getReference().child("StudentSubs");
+                mRef.addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+//                        mRef = firebaseDatabase.getReference().child("StudentSubs").child(dataSnapshot.getKey())
+                        classKeys.add(dataSnapshot.getKey());
+                    }
+
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                    }
+
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+                for(final String str : classKeys){
+                    if(dataSnapshot.getKey().equals(str)){
+                        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                        mRef = mRef.getRef().child("Classes");
+                        mRef.addChildEventListener(new ChildEventListener() {
+                            @Override
+                            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                                String tID = dataSnapshot.getKey();
+                                mRef = mRef.getRef().child("Classes").child(tID).child(str);
+                                mRef.addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        ClassModel classModel = dataSnapshot.getValue(ClassModel.class);
+                                        bnm = new basicNotificationModel(classModel.getSubjectName(),classModel.getDay() + " " + classModel.getTime() , classModel.getRoom());
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                            }
+
+                            @Override
+                            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                            }
+
+                            @Override
+                            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+                        mRef = mRef.getRef().child("StudentNotification").child(user.getUid()).child(str);
+                        mRef.setValue(bnm);
+                    }
+                }
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         init();
         initBottomBar();
@@ -68,6 +193,7 @@ public class StudentActivity extends AppCompatActivity{
     private void init() {
 
         mAuth = FirebaseAuth.getInstance();
+//        mAuth.signOut();
         mBottomNav = (AHBottomNavigation) findViewById(R.id.student_bottom_navigation);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle("Home");

@@ -95,47 +95,17 @@ public class studentClassRecycler extends RecyclerView.Adapter<studentClassRecyc
             mDrop.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                    mRef = mRef.child("StudentSubs").child(user.getUid()).child(keys.get(getAdapterPosition()));
-                    mRef.setValue(null);
-
-//                    Log.d("charles",mRef.child("StudentSubs").child(keys.get(getAdapterPosition())).getRef().toString());
-//                    mRef.child("ClassParticipants");
+//                    final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+//                    mRef = mRef.child("StudentSubs").child(user.getUid()).child(keys.get(getAdapterPosition()));
+//                    mRef.setValue(null);
+//
+//                    mRef = mRef.child("ClassParticipants");
 //                    mRef.addChildEventListener(new ChildEventListener() {
 //                        @Override
 //                        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-//                            final String tID = dataSnapshot.getKey();
-//                            mRef.child("ClassParticipants").child(tID);
-//                            mRef.addChildEventListener(new ChildEventListener() {
-//                                @Override
-//                                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-//                                    final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-//                                    if(dataSnapshot.getKey().equals(user.getUid())){
-//                                        mRef.child("ClassParticipants").child(tID).child(dataSnapshot.getKey());
-//
-//                                    }
-//                                }
-//
-//                                @Override
-//                                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-//
-//                                }
-//
-//                                @Override
-//                                public void onChildRemoved(DataSnapshot dataSnapshot) {
-//
-//                                }
-//
-//                                @Override
-//                                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-//
-//                                }
-//
-//                                @Override
-//                                public void onCancelled(DatabaseError databaseError) {
-//
-//                                }
-//                            });
+//                            String tID = dataSnapshot.getKey();
+//                            mRef = mRef.child("ClassParticipants").child(tID).child(keys.get(getAdapterPosition())).child(user.getUid());
+//                            mRef.setValue(null);
 //                        }
 //
 //                        @Override

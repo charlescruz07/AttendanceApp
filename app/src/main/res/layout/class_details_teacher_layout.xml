@@ -41,6 +41,15 @@
             android:layout_gravity="bottom|end"
             android:layout_marginBottom="11dp"
             android:layout_marginRight="10dp"/>
+
+        <ImageView
+            android:id="@+id/openSession"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginBottom="11dp"
+            android:layout_marginRight="40dp"
+            android:layout_gravity="bottom|end"
+            android:background="#32CD32"/>
     </FrameLayout>
 
 

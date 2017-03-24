@@ -42,6 +42,7 @@ public class TeacherActivity extends AppCompatActivity implements View.OnClickLi
         fragmentManager = getFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragmentHolder, new ActivityListFragment()).commit();
+
     }
 
     @Override
