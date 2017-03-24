@@ -17,7 +17,7 @@
         android:title="Notifications"
         android:enabled="true"/>
     <item
-        android:id="@+id/bbn_profile"
+        android:id="@+id/bbn_item3"
         android:icon="@drawable/bottombar_user"
         android:title="Profile"
         android:enabled="true"

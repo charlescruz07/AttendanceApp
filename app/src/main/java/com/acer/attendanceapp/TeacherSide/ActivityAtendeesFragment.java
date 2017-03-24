@@ -33,8 +33,7 @@ public class ActivityAtendeesFragment extends Fragment {
     private FirebaseStorage firebaseStorage;
     private StorageReference mStorageRef;
     private Query query;
-//    private ArrayList<ClassModel> classesList;
-//    private ArrayList<String> subjectPKS;
+
 
     @Nullable
     @Override
