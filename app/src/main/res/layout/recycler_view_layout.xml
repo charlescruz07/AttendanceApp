@@ -4,11 +4,22 @@
     android:layout_height="match_parent"
    >
 
+    <android.support.design.widget.CoordinatorLayout
+
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="false"
+        tools:context="com.cruz.ethelon.NotificationActivity"
+        android:layout_above="@+id/bottomBar">
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
     </android.support.v7.widget.RecyclerView>
+
+    </android.support.design.widget.CoordinatorLayout>
 
 </LinearLayout>

@@ -62,6 +62,7 @@ public class StudentActivity extends AppCompatActivity{
     private void init() {
 
         mAuth = FirebaseAuth.getInstance();
+//        mAuth.signOut();
         mBottomNav = (AHBottomNavigation) findViewById(R.id.student_bottom_navigation);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle("");
@@ -264,6 +265,25 @@ public class StudentActivity extends AppCompatActivity{
                 break;
             case 2:
                 studentShowSubjectDialog studentShowSubjectDialog = new studentShowSubjectDialog();
+                studentShowSubjectDialog.setRetainInstance(true);
+                studentShowSubjectDialog.show(getSupportFragmentManager(), "Confirm subject");
+                break;
+        }
+
+    }
+    public void showDialogs(int identifier,String classKey){
+
+        switch (identifier){
+            case 1:
+                studentAddClassDialog studentAddClassDialog = new studentAddClassDialog();
+                studentAddClassDialog.setRetainInstance(true);
+                studentAddClassDialog.show(getSupportFragmentManager(), "add class");
+                break;
+            case 2:
+                Bundle bundle = new Bundle();
+                bundle.putString("class key", classKey);
+                studentShowSubjectDialog studentShowSubjectDialog = new studentShowSubjectDialog();
+                studentShowSubjectDialog.setArguments(bundle);
                 studentShowSubjectDialog.setRetainInstance(true);
                 studentShowSubjectDialog.show(getSupportFragmentManager(), "Confirm subject");
                 break;

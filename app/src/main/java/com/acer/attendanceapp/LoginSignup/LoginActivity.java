@@ -94,6 +94,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
                     mRef.child("Users").child(user.getUid()).child("Name").setValue(user.getDisplayName());
+                    mRef.child("Users").child(user.getUid()).child("Picture").setValue(user.getPhotoUrl().toString());
                     Query query = mRef.child("Users")
                             .child(user.getUid())
                             .child("Role")
@@ -250,12 +251,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     @Override
     public void onClick(View v) {
         if(v.getId() == R.id.fbLogin){
-//            LoginManager.getInstance().logInWithReadPermissions(
-//                    this,
-//                    Arrays.asList("user_photos", "email", "user_birthday", "public_profile")
-//            );
-            Intent intent = new Intent(this, StudentActivity.class);
-            startActivity(intent);
+            LoginManager.getInstance().logInWithReadPermissions(
+                    this,
+                    Arrays.asList("user_photos", "email", "user_birthday", "public_profile")
+            );
         }else if(v.getId() == R.id.googleLogin){
             signInUsingGoogle();
         }

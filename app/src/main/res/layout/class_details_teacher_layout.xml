@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout android:layout_width="match_parent"
+<ScrollView
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="@drawable/background_img">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
     <RelativeLayout
         android:id="@+id/rel1"
         android:orientation="vertical" android:layout_width="match_parent"
@@ -165,12 +169,47 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"/>
 
+
+        <TextView
+            android:id="@+id/label3"
+            android:layout_below="@+id/line1"
+            android:text="Student List"
+            android:textSize="18sp"
+            android:textColor="#fff"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"/>
+
+        <FrameLayout
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/label3"
+            android:id="@+id/studentListHolder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="2dp"
+            ></FrameLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/studentListHolder"
+            android:layout_marginTop="15dp"
+            android:alpha=".5"
+            android:background="#fff"
+            android:id="@+id/line2"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"/>
+
         <TextView
             android:id="@+id/label2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18sp"
-            android:layout_below="@+id/line1"
+            android:layout_below="@+id/line2"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="20dp"
             android:textColor="#fff"
@@ -182,9 +221,10 @@
             android:layout_below="@+id/label2"
             android:id="@+id/classParticipantsHolder"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="300dp"
             android:layout_marginRight="20dp"
             android:layout_marginLeft="20dp"
             android:layout_marginBottom="2dp"></FrameLayout>
 
     </RelativeLayout>
+</ScrollView>

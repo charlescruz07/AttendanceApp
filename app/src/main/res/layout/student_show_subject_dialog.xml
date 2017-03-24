@@ -19,12 +19,14 @@
         android:layout_weight="1"
         android:gravity="center">
     <ImageView
+        android:id="@+id/profPic"
         android:src="@drawable/professor_pic"
         android:layout_width="70dp"
         android:scaleType="centerCrop"
         android:layout_height="70dp" />
 
         <TextView
+            android:id="@+id/profName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Button"
@@ -44,14 +46,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
-            android:text="Subject"/>
+            android:text="SUBJECT"/>
 
         <TextView
+            android:id="@+id/subName"
             android:layout_marginTop="4dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textStyle="bold"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
             android:text="Android Programming"/>
 
         <TextView
@@ -59,13 +63,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
-            android:text="Schedule"/>
+            android:text="SCHEDULE"/>
 
         <TextView
+            android:textStyle="bold"
+            android:id="@+id/subSched"
             android:layout_marginTop="4dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
             android:text="MWF 10:30-12:00"/>
 
         <TextView
@@ -73,13 +79,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
-            android:text="Venue"/>
+            android:text="VENUE"/>
 
         <TextView
+            android:textStyle="bold"
+            android:id="@+id/subRoom"
             android:layout_marginTop="4dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
             android:text="BCL 9"/>
 
 

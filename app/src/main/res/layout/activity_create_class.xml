@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/background_img">
-    <ProgressBar
-        android:id="@+id/progress_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:visibility="gone"/>
 
-<ScrollView
-    android:orientation="vertical"
+<ScrollView android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-<LinearLayout
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="@drawable/background_img"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone"/>
+<RelativeLayout
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/label"
@@ -27,12 +28,14 @@
         android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
+        android:layout_centerHorizontal="true"
         android:background="@drawable/square_white"
         android:padding="10dp"
         android:layout_marginTop="50dp"/>
 
     <LinearLayout
+        android:id="@+id/linz1"
+        android:layout_below="@+id/label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -57,6 +60,7 @@
     </LinearLayout>
 
     <ImageView
+        android:layout_below="@id/linz1"
         android:id="@+id/picHolder"
         android:layout_marginTop="15dp"
         android:layout_marginRight="20dp"
@@ -69,6 +73,8 @@
         android:visibility="gone"/>
 
     <TextView
+        android:id="@+id/labelz2"
+        android:layout_below="@id/picHolder"
         android:text="School:"
         android:textSize="15sp"
         android:textColor="#fff"
@@ -78,6 +84,7 @@
         android:layout_height="wrap_content" />
 
     <EditText
+        android:layout_below="@+id/labelz2"
         android:id="@+id/schoolTxt"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="20dp"
@@ -87,6 +94,8 @@
         android:background="@drawable/square_white_filled"/>
 
     <TextView
+        android:id="@+id/labelz3"
+        android:layout_below="@id/schoolTxt"
         android:text="Subject Name:"
         android:textSize="15sp"
         android:textColor="#fff"
@@ -96,6 +105,7 @@
         android:layout_height="wrap_content" />
 
     <EditText
+        android:layout_below="@+id/labelz3"
         android:id="@+id/nameTxt"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="20dp"
@@ -106,6 +116,8 @@
 
 
     <LinearLayout
+        android:id="@+id/linz2"
+        android:layout_below="@id/nameTxt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -160,6 +172,8 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linz3"
+        android:layout_below="@id/linz2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -215,6 +229,7 @@
     </LinearLayout>
 
     <TextView
+        android:layout_below="@+id/linz3"
         android:id="@+id/submitBtn"
         android:layout_marginTop="30dp"
         android:layout_marginBottom="30dp"
@@ -227,8 +242,8 @@
         android:background="@drawable/square_white_filled"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"/>
+        android:layout_centerHorizontal="true"/>
 
-</LinearLayout>
-</ScrollView>
 </RelativeLayout>
+    </RelativeLayout>
+</ScrollView>

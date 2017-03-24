@@ -7,6 +7,7 @@ package com.acer.attendanceapp.Models;
 public class Users {
     private String userName;
     private String userRole;
+    private String userPic;
 
     public Users() {
 
@@ -26,5 +27,13 @@ public class Users {
 
     public void setUserRole(String userRole) {
         this.userRole = userRole;
+    }
+
+    public String getUserPic() {
+        return userPic;
+    }
+
+    public void setUserPic(String userPic) {
+        this.userPic = userPic;
     }
 }

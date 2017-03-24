@@ -42,7 +42,7 @@ public class CreateClassActivity extends AppCompatActivity implements View.OnCli
     private FirebaseStorage firebaseStorage;
     private StorageReference mStorageRef;
     private FirebaseDatabase firebaseDatabase;
-    private DatabaseReference mRef;
+    private DatabaseReference mRef,mref2;
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
     @Override
@@ -65,7 +65,6 @@ public class CreateClassActivity extends AppCompatActivity implements View.OnCli
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         mRef = firebaseDatabase.getReference().child("Classes").child(mUser.getUid()).push();
-
         firebaseStorage = FirebaseStorage.getInstance();
         mStorageRef = firebaseStorage.getReference("ClassPictures");
         Log.d("charles",mStorageRef.toString());
@@ -94,12 +93,14 @@ public class CreateClassActivity extends AppCompatActivity implements View.OnCli
                         classModel.setClassPic(taskSnapshot.getDownloadUrl().toString());
                         Log.d("charles",taskSnapshot.toString());
                         mRef.setValue(classModel);
+//                        mref2.setValue("wasa");
                         progressBar.setVisibility(View.GONE);
                         finish();
                         startActivity(new Intent(CreateClassActivity.this, TeacherActivity.class));
                     }
                 });
             }catch (Exception e){
+                progressBar.setVisibility(View.VISIBLE);
                 Toast.makeText(this, "There seems to be a problem.", Toast.LENGTH_SHORT).show();
             }
         }

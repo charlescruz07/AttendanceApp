@@ -93,6 +93,12 @@ public class ClassDetailsActivity extends AppCompatActivity {
         fragmentManager = getFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.classParticipantsHolder,new ActivityAtendeesFragment()).commit();
+        fragmentTransaction = fragmentManager.beginTransaction();
+        Bundle bundle = new Bundle();
+        bundle.putString("key",key);
+        ClassParticipantFragment classParticipantFragment = new ClassParticipantFragment();
+        classParticipantFragment.setArguments(bundle);
+        fragmentTransaction.replace(R.id.studentListHolder,classParticipantFragment).commit();
 
     }
 }
