@@ -38,19 +38,18 @@ public class studentNotificationRecycler extends RecyclerView.Adapter<studentNot
 
     private final Context mContext;
     private final List<ListItem> mItems;
+    private studentNotification studentNotification;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference mRef;
 
 
-    public studentNotificationRecycler(Context ctx, List<ListItem> items){
+    public studentNotificationRecycler(Context ctx, List<ListItem> items, studentNotification studentNotification){
         mContext = ctx;
         mItems = items;
+        this.studentNotification = studentNotification;
     }
 
-    public void addNotif(SessionModel sessionModel)
-    {
-        //mItems.add(new basicNotificationModel(sessionModel.getClassName(), sessionModel.getSched(), sessionModel.getVenue()));
-    }
+
 
     @Override
     public int getItemViewType(int position) {
@@ -158,7 +157,7 @@ public class studentNotificationRecycler extends RecyclerView.Adapter<studentNot
                     firebaseDatabase = FirebaseDatabase.getInstance();
                     mRef = firebaseDatabase.getReference();
 
-                    mRef = mRef.child("StudentAttendee").child(((basicNotificationModel)item).getKey());
+                    mRef = mRef.child("StudentAttendee").child(((basicNotificationModel)item).getKey()).push();
                     mRef.setValue(studentPartticipant);
 
 

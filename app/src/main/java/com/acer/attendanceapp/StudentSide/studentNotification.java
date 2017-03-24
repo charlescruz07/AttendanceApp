@@ -1,10 +1,12 @@
 package com.acer.attendanceapp.StudentSide;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,12 +52,21 @@ public class studentNotification extends Fragment{
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         layoutManager = new LinearLayoutManager(view.getContext());
         mRecyclerView.setLayoutManager(layoutManager);
-        adapter = new studentNotificationRecycler(((StudentActivity)getActivity()).getApplicationContext(), items);
+        adapter = new studentNotificationRecycler(((StudentActivity)getActivity()).getApplicationContext(), items, this);
         mRecyclerView.setAdapter(adapter);
         return view;
     }
 
-    public void addBasicNotif(SessionModel sessionModel){
+
+    public void addNotif(List<ListItem> items, Context mContext){
+        if(items!=null){
+//            items.add(new basicNotificationModel(sessionModel.getClassName(),sessionModel.getSched(),sessionModel.getVenue(), sessionModel.getKey()));
+            //adapter.notifyDataSetChanged();
+            adapter = null;
+            adapter = new studentNotificationRecycler(mContext, items, this);
+        }
+        else
+            Log.d("kf", "null");
 
     }
 }

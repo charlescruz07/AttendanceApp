@@ -45,6 +45,7 @@ import com.heinrichreimersoftware.materialdrawer.structure.DrawerItem;
 import com.heinrichreimersoftware.materialdrawer.structure.DrawerProfile;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Kristian Francisco on 20/03/2017.
@@ -71,11 +72,13 @@ public class StudentActivity extends AppCompatActivity{
     private static studentMessages studentMessages = new studentMessages();
     private static studentMessageReply studentMessageReply = new studentMessageReply();
 
+    private List<ListItem> items;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_layout);
 
+        items = new ArrayList<ListItem>();
         firebaseDatabase = FirebaseDatabase.getInstance();
         mRef = firebaseDatabase.getReference();
         firebaseStorage = FirebaseStorage.getInstance();
@@ -124,6 +127,15 @@ public class StudentActivity extends AppCompatActivity{
                                 Bundle bundle = new Bundle();
                                 bundle.putParcelable("notif",sessionModel);
                                 studentNotification.setArguments(bundle);
+                                mBottomNav.setNotification("1", 1);
+//                                if(sessionModel!=null) {
+//                                    items.add(new basicNotificationModel(sessionModel.getClassName(),sessionModel.getSched(),sessionModel.getVenue(), sessionModel.getKey()));
+//                                    Log.d("kf", "dili null ang model");
+//                                    studentNotification.addNotif(items, getApplicationContext());
+//                                }
+//                                else
+//                                    Log.d("kf", "null ang model");
+
                             }
 
                             @Override
@@ -348,7 +360,6 @@ public class StudentActivity extends AppCompatActivity{
         });
 
 //        Adding notifications
-        mBottomNav.setNotification("1", 1);
 //        OR
 //        AHNotification notification = new AHNotification.Builder()
 //                .setText("1")
@@ -458,5 +469,6 @@ public class StudentActivity extends AppCompatActivity{
         }
 
     }
+
 
 }
