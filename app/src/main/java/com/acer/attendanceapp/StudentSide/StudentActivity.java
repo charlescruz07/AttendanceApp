@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.acer.attendanceapp.LoginSignup.LoginActivity;
@@ -44,6 +45,9 @@ public class StudentActivity extends AppCompatActivity{
     private ActionBarDrawerToggle mDrawerToggle;
     private FloatingActionButton mFab;
 
+    private static studentNotification studentNotification = new studentNotification();
+    private static studentClasses studentClasses = new studentClasses();
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +69,7 @@ public class StudentActivity extends AppCompatActivity{
 //        mAuth.signOut();
         mBottomNav = (AHBottomNavigation) findViewById(R.id.student_bottom_navigation);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle("");
+        mToolbar.setTitle("Home");
         setSupportActionBar(mToolbar);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         mDrawer = (DrawerView) findViewById(R.id.drawer);
@@ -94,6 +98,10 @@ public class StudentActivity extends AppCompatActivity{
             }
         });
 
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.student_fragment_container, studentClasses)
+                .commit();
+
     }
 
     private void initDrawer() {
@@ -108,14 +116,19 @@ public class StudentActivity extends AppCompatActivity{
 
                 switch(position){
                     case 0:
+                        mToolbar.setTitle("Home");
                         break;
                     case 1:
+                        mToolbar.setTitle("Profile");
                         break;
                     case 2:
+                        mToolbar.setTitle("Statistics");
                         break;
                     case 3:
+                        mToolbar.setTitle("Classmates");
                         break;
                     case 4:
+                        mToolbar.setTitle("Settings");
                         break;
                     case 5:
                         Intent intent = new Intent(StudentActivity.this, LoginActivity.class);
@@ -207,13 +220,21 @@ public class StudentActivity extends AppCompatActivity{
                 switch (position){
 
                     case 0:
-                        Toast.makeText(StudentActivity.this, "Tab 0 selected", Toast.LENGTH_SHORT).show();
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.student_fragment_container, studentClasses)
+                                .commit();
+                        mFab.setVisibility(View.VISIBLE);
                         break;
                     case 1:
-                        Toast.makeText(StudentActivity.this, "Tab 1 selected", Toast.LENGTH_SHORT).show();
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.student_fragment_container, studentNotification)
+                                .commit();
+                        mBottomNav.setNotification("", 1);
+                        mFab.setVisibility(View.GONE);
                         break;
                     case 2:
                         Toast.makeText(StudentActivity.this, "Tab 2 selected", Toast.LENGTH_SHORT).show();
+                        mFab.setVisibility(View.GONE);
                         break;
 
                 }
@@ -223,7 +244,7 @@ public class StudentActivity extends AppCompatActivity{
         });
 
 //        Adding notifications
-//        bottomNavigation.setNotification("1", 3);
+        mBottomNav.setNotification("1", 1);
 //        OR
 //        AHNotification notification = new AHNotification.Builder()
 //                .setText("1")

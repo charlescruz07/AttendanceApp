@@ -27,7 +27,8 @@
             android:id="@+id/student_fragment_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/toolbar"/>
+            android:layout_below="@+id/toolbar"
+            android:layout_above="@+id/student_bottom_navigation"/>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/studentFab"
