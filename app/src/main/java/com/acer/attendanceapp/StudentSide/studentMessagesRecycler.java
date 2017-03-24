@@ -63,7 +63,7 @@ public class studentMessagesRecycler extends RecyclerView.Adapter<studentMessage
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    studentActivity.goReply();
+                    studentActivity.goReply(1);
                     //Toast.makeText(mContext, "clicked at position " + getAdapterPosition(), Toast.LENGTH_SHORT).show();
                 }
             });

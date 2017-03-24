@@ -318,10 +318,16 @@ public class StudentActivity extends AppCompatActivity{
 
     }
 
-    public void goReply(){
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.student_fragment_container, studentMessageReply)
-                .commit();
+    public void goReply(int identifier){
+
+        switch (identifier){
+
+            case 1:getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.student_fragment_container, studentMessageReply)
+                    .commit();
+                break;
+        }
+
     }
 
 }
