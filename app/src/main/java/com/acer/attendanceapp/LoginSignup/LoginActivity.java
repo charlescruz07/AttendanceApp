@@ -52,7 +52,7 @@ import java.util.Arrays;
 
 
 /**
- * Created by Acer on 19/03/2017.
+ * Created by Deceree on 19/03/2017.
  */
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
